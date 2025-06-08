@@ -10,7 +10,7 @@ This tool fetches the **LeetCode Daily Problem**, checks for a local solution in
 - 🔁 Automatically fetches the daily LeetCode problem
 - 🧠 Detects if a solution exists in your repo
 - 🚀 Automatically submits the solution to LeetCode
-- ⏰ Runs daily at 6:00 AM IST (customizable via cron)
+- ⏰ Runs daily (customizable via cron)
 
 ---
 
