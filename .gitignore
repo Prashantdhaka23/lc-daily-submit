@@ -2,3 +2,13 @@
 .env
 *.pyc
 __pycache__/
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+*.log
+*.egg
+*.egg-info/
+*.dist-info/
+*.zip
+*.tar.gz            

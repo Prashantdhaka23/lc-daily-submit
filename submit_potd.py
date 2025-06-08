@@ -36,6 +36,7 @@ def fetch_potd_slug():
         }
         """
     }
+    # Send the GraphQL request to LeetCodegraphql
     response = requests.post(graphql_url, json=query, headers=HEADERS)
     data = response.json()
     question = data["data"]["activeDailyCodingChallengeQuestion"]["question"]
