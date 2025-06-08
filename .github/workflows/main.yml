@@ -1,4 +1,4 @@
-name: LeetCode POTD Auto Submit
+name: LeetCode POTD Auto Submit Daily
 
 on:
   schedule:
