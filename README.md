@@ -63,7 +63,8 @@ name: LC POTD Auto Submit
 
 on:
   schedule:
-    - cron: '4 0 * * *'  # Runs at 9:30 AM IST daily(Indian)
+    - cron: '4 0 * * *'  # Runs every day at 9:30 AM IST
+
   workflow_dispatch:
 
 jobs:
