@@ -87,12 +87,16 @@ def submit_solution(title_slug, code):
 
     if response.status_code == 200:
         print(f"[✓] Submitted {title_slug} successfully.")
+        send_telegram_message(f"✅ *LeetCode Submission Successful*\nTitle: {title_slug}")
     elif response.status_code == 403:
         print(f"[!] Submission failed: {response.status_code} | {response.text}")
         send_telegram_message(
             "⚠️ *LeetCode Session Expired*\nPlease update your `LEETCODE_SESSION` and `CSRF_TOKEN` in GitHub Secrets."
         )
     else:
+        send_telegram_message(
+            f"⚠️ *LeetCode Submission Failed*\nTitle: {title_slug}\nStatus: {response.status_code}\nMessage: {response.text}"
+        )
         print(f"[!] Submission failed: {response.status_code} | {response.text}")
 
 def main():

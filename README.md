@@ -37,9 +37,27 @@ This tool fetches the **LeetCode Daily Problem of the Day (POTD)**, downloads th
 
 Clone or fork this repository to your GitHub account.
 
+```bash
+git clone https://github.com/Prashantdhaka23/lc-daily-submit.git
+cd lc-daily-submit
+```
 ---
+### 2. Get Your LeetCode Cookies
 
-### 2. Set Up GitHub Secrets
+1. Log in to [leetcode.com](https://leetcode.com)
+
+2. Open your browser’s DevTools:
+   - Right-click anywhere on the page → **Inspect**
+   - Go to the **Application** tab
+   - In the sidebar, go to **Storage → Cookies → https://leetcode.com**
+
+3. Find and copy the values of the following cookies:
+   - `LEETCODE_SESSION`
+   - `csrftoken`
+
+> 🔒 These are required to authenticate API requests to LeetCode.
+---
+### 3. Set Up GitHub Secrets
 
 Go to your repository → `Settings` → `Secrets and variables` → `Actions` → `New repository secret` and add the following:
 
@@ -54,7 +72,7 @@ Go to your repository → `Settings` → `Secrets and variables` → `Actions` �
 
 ---
 
-### 3. Configure GitHub Workflow
+### 4. Configure GitHub Workflow
 
 Create the following workflow file at `.github/workflows/main.yml`:
 
@@ -94,7 +112,7 @@ jobs:
 
 ---
 
-### 4. `submit_potd.py` Logic Overview
+### 5. `submit_potd.py` Logic Overview
 
 The script performs the following steps:
 
@@ -106,7 +124,7 @@ The script performs the following steps:
 
 ---
 
-### 5. Example `requirements.txt`
+### 6. Example `requirements.txt`
 
 ```
 requests
@@ -117,14 +135,31 @@ python-dotenv
 
 ---
 
+
 ## 🧪 Testing It Locally
 
-You can run the script manually using:
+### ✅ Steps:
 
-```bash
-export $(cat .env | xargs)  # Load env vars (for local testing only)
-python submit_potd.py
-```
+1. **Install dependencies:**
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+2. **Create a `.env` file** in the root directory with the following content:
+
+   ```env
+   LEETCODE_SESSION=your_session_cookie_here
+   CSRF_TOKEN=your_csrf_token_here
+   TELEGRAM_BOT_TOKEN=your_bot_token_here
+   TELEGRAM_CHAT_ID=your_chat_id_here
+   ```
+
+3. **Run the script:**
+   ```bash
+   python submit_potd.py
+   ```
+   > 💬 You should receive a Telegram message on success or failure.
 
 ---
 
@@ -139,11 +174,27 @@ Please update your LEETCODE_SESSION and CSRF_TOKEN in GitHub secrets.
 
 ---
 
-## 🧼  Experimental Files
-Remove or archive `experiment.py` it was only used for Selenium testing,
-🧪 Note: Selenium-based login was tested but discarded due to LeetCode's enhanced login security mechanisms.
+## 🧼 Experimental Files
+
+The `experiment.py` file has been archived. It was used only for initial Selenium-based login testing.
+
+> 🧪 **Note:**  
+> Selenium-based login was **tested but later discarded** due to LeetCode’s enhanced login security mechanisms (e.g., CAPTCHA, MFA), which made automation unreliable and inconsistent.
 
 ---
+
+---
+
+## 🙌 Contributing & Support
+
+If you find this project helpful, please consider giving it a ⭐️ — it really motivates and helps others discover the tool!
+
+Found a bug or have an improvement idea?  
+We welcome contributions! Feel free to [open an issue](https://github.com/Prashantdhaka23/lc-daily-submit/issues) or [raise a pull request](https://github.com/Prashantdhaka23/lc-daily-submit/pulls).
+
+---
+
+> Made with 💻, ☕, and a bit of automation magic ✨
 
 ## 📄 License
 

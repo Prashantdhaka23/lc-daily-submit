@@ -115,89 +115,17 @@ def refresh_leetcode_tokens():
             pass
         driver.quit()
         exit(1)
-def get_headers():
-    load_dotenv()
-    LEETCODE_SESSION = os.getenv("LEETCODE_SESSION")
-    CSRF_TOKEN = os.getenv("CSRF_TOKEN")
-    if not LEETCODE_SESSION or not CSRF_TOKEN:
-        print("❌ Missing session or CSRF token.")
-        exit(1)
-    return {
-        "Cookie": f"LEETCODE_SESSION={LEETCODE_SESSION}; csrftoken={CSRF_TOKEN}",
-        "x-csrftoken": CSRF_TOKEN,
-        "referer": "https://leetcode.com",
-        "origin": "https://leetcode.com",
-        "Content-Type": "application/json",
-    }
 
-def fetch_potd_slug():
-    graphql_url = "https://leetcode.com/graphql"
-    query = {
-        "query": """
-        query questionOfToday {
-          activeDailyCodingChallengeQuestion {
-            date
-            question {
-              titleSlug
-              title
-            }
-          }
-        }
-        """
-    }
-    response = requests.post(graphql_url, json=query, headers=get_headers())
-    question = response.json()["data"]["activeDailyCodingChallengeQuestion"]["question"]
-    return question["titleSlug"], question["title"]
-
-def guess_cpp_filename(title):
-    return title.lower().replace(" ", "-").replace("?", "").replace(",", "").replace("'", "") + ".cpp"
-
-def get_solution_code(filename):
-    url = KAMYU_REPO_URL + filename
-    r = requests.get(url)
-    if r.status_code == 200:
-        return r.text
-    else:
-        print(f"[!] File not found in repo: {filename}")
-        return None
-
-def fetch_question_id(title_slug):
-    query = {
-        "query": """
-        query questionData($titleSlug: String!) {
-          question(titleSlug: $titleSlug) {
-            questionId
-          }
-        }
-        """,
-        "variables": { "titleSlug": title_slug }
-    }
-    graphql_url = "https://leetcode.com/graphql"
-    r = requests.post(graphql_url, json=query, headers=get_headers())
-    return r.json()["data"]["question"]["questionId"]
-
-def submit_solution(title_slug, code):
-    payload = {
-        "lang": LANGUAGE,
-        "question_id": fetch_question_id(title_slug),
-        "typed_code": code
-    }
-    submit_url = f"https://leetcode.com/problems/{title_slug}/submit/"
-    r = requests.post(submit_url, json=payload, headers=get_headers())
-    if r.status_code == 200:
-        print(f"[✓] Submitted {title_slug} successfully.")
-    else:
-        print(f"[!] Submission failed: {r.status_code} | {r.text}")
 
 def main():
     refresh_leetcode_tokens()
-    slug, title = fetch_potd_slug()
-    filename = guess_cpp_filename(title)
-    print(f"[•] POTD: {title} ({slug})")
-    print(f"[•] Fetching file: {filename}")
-    cpp_code = get_solution_code(filename)
-    if cpp_code:
-        submit_solution(slug, cpp_code)
+    # slug, title = fetch_potd_slug()
+    # filename = guess_cpp_filename(title)
+    # print(f"[•] POTD: {title} ({slug})")
+    # print(f"[•] Fetching file: {filename}")
+    # cpp_code = get_solution_code(filename)
+    # if cpp_code:
+    #     submit_solution(slug, cpp_code)
 
 if __name__ == "__main__":
     main()
