@@ -20,6 +20,26 @@ HEADERS = {
 LANGUAGE = "cpp"  # C++ for kamyu104
 KAMYU_REPO_URL = "https://raw.githubusercontent.com/kamyu104/LeetCode-Solutions/master/C++/"
 
+def send_telegram_message(msg):
+    bot_token = os.getenv("TELEGRAM_BOT_TOKEN")
+    chat_id = os.getenv("TELEGRAM_CHAT_ID")
+    if not bot_token or not chat_id:
+        print("[!] Telegram credentials missing.")
+        return
+
+    url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+    payload = {
+        "chat_id": chat_id,
+        "text": msg,
+        "parse_mode": "Markdown"
+    }
+    try:
+        r = requests.post(url, json=payload)
+        if r.status_code != 200:
+            print(f"[!] Failed to send Telegram alert: {r.text}")
+    except Exception as e:
+        print(f"[!] Telegram error: {e}") 
+
 # === STEP 1: Get today's POTD ===
 def fetch_potd_slug():
     graphql_url = "https://leetcode.com/graphql"
@@ -69,9 +89,11 @@ def submit_solution(title_slug, code):
     r = requests.post(submit_url, json=payload, headers=HEADERS)
     if r.status_code == 200:
         print(f"[✓] Submitted {title_slug} successfully.")
+    elif r.status_code == 403:
+        print(f"[!] Submission failed: {r.status_code} | {r.text}")
+        send_telegram_message("⚠️ *LeetCode Session Expired*\nPlease update your `LEETCODE_SESSION` and `CSRF_TOKEN` in the `.env` file.")
     else:
         print(f"[!] Submission failed: {r.status_code} | {r.text}")
-
 # === Utility: Get Question ID ===
 def fetch_question_id(title_slug):
     query = {

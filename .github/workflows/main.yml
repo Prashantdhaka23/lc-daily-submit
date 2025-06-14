@@ -2,7 +2,7 @@ name: LeetCode POTD Auto Submit Daily
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # Runs every day at 12:00 AM UTC and triggers the job
+    - cron: '0 4 * * *'  # Runs every day at 12:00 AM UTC and triggers the job
   # Manually trigger the workflow
   # This allows you to run the workflow on demand
   workflow_dispatch:
@@ -29,5 +29,7 @@ jobs:
         env:
           LEETCODE_SESSION: ${{ secrets.LEETCODE_SESSION }}
           CSRF_TOKEN: ${{ secrets.CSRF_TOKEN }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
           python submit_potd.py
