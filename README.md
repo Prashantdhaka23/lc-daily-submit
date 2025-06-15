@@ -1,4 +1,4 @@
-# LC Daily Submit 🚀
+# LeetCode POTD Auto Submission Tool 🚀
 
 Automate your daily LeetCode challenge submissions using GitHub Actions!  
 This tool fetches the **LeetCode Daily Problem of the Day (POTD)**, downloads the C++ solution from [kamyu104/LeetCode-Solutions](https://github.com/kamyu104/LeetCode-Solutions), and automatically submits it to LeetCode. Telegram alerts notify you of success or failures like expired sessions.
